@@ -139,3 +139,443 @@
         }
 
         .btn::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 50%;
+            transition: all 0.3s ease;
+            transform: translate(-50%, -50%);
+        }
+
+        .btn:hover::before {
+            width: 300px;
+            height: 300px;
+        }
+
+        .btn-primary {
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            color: white;
+            box-shadow: 0 6px 20px rgba(102, 126, 234, 0.3);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.4);
+        }
+
+        .btn-success {
+            background: linear-gradient(45deg, #28a745, #20c997);
+            color: white;
+            box-shadow: 0 6px 20px rgba(40, 167, 69, 0.3);
+        }
+
+        .btn-success:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(40, 167, 69, 0.4);
+        }
+
+        .btn-danger {
+            background: linear-gradient(45deg, #dc3545, #c82333);
+            color: white;
+            box-shadow: 0 6px 20px rgba(220, 53, 69, 0.3);
+        }
+
+        .btn-danger:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(220, 53, 69, 0.4);
+        }
+
+        .products-admin {
+            padding: 30px;
+        }
+
+        .products-admin h2 {
+            color: #495057;
+            margin-bottom: 25px;
+            font-size: 1.8em;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .product-item {
+            background: white;
+            padding: 20px;
+            margin-bottom: 15px;
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            display: grid;
+            grid-template-columns: 80px 1fr auto;
+            gap: 20px;
+            align-items: center;
+            transition: all 0.3s ease;
+        }
+
+        .product-item:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+        }
+
+        .product-thumb {
+            width: 80px;
+            height: 80px;
+            border-radius: 10px;
+            background: #f8f9fa;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+
+        .product-thumb img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .product-details h3 {
+            color: #495057;
+            margin-bottom: 5px;
+        }
+
+        .product-details .price {
+            color: #FF6B6B;
+            font-weight: bold;
+            font-size: 1.2em;
+        }
+
+        .product-details .description {
+            color: #6c757d;
+            font-size: 13px;
+            margin-top: 5px;
+            line-height: 1.4;
+        }
+
+        .product-actions {
+            display: flex;
+            gap: 10px;
+        }
+
+        .alert {
+            padding: 15px 20px;
+            margin: 20px 0;
+            border-radius: 10px;
+            font-weight: bold;
+        }
+
+        .alert-success {
+            background: linear-gradient(45deg, #d4edda, #c3e6cb);
+            color: #155724;
+            border: 2px solid #c3e6cb;
+        }
+
+        .alert-error {
+            background: linear-gradient(45deg, #f8d7da, #f5c6cb);
+            color: #721c24;
+            border: 2px solid #f5c6cb;
+        }
+
+        @media (max-width: 768px) {
+            .admin-form {
+                grid-template-columns: 1fr;
+            }
+
+            .product-item {
+                grid-template-columns: 1fr;
+                text-align: center;
+                gap: 15px;
+            }
+
+            .product-actions {
+                justify-content: center;
+            }
+
+            .header h1 {
+                font-size: 2em;
+            }
+
+            .back-link {
+                position: static;
+                display: inline-block;
+                margin-bottom: 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <div class="header">
+            <a href="index.html" class="back-link">← Volver al Catálogo</a>
+            <h1>⚙️ Panel de Administración</h1>
+            <p>Gestiona tu catálogo de productos</p>
+        </div>
+
+        <!-- Add Product Section -->
+        <div class="admin-section">
+            <h2 style="color: #495057; margin-bottom: 20px; display: flex; align-items: center; gap: 10px;">
+                ➕ Agregar Nuevo Producto
+            </h2>
+            
+            <div id="alertContainer"></div>
+            
+            <form class="admin-form" id="productForm">
+                <div class="form-group">
+                    <label for="productName">📝 Nombre del Producto *</label>
+                    <input type="text" id="productName" required placeholder="Ej: iPhone 15 Pro">
+                </div>
+
+                <div class="form-group">
+                    <label for="productPrice">💰 Precio *</label>
+                    <input type="text" id="productPrice" required placeholder="Ej: Q 5,500.00">
+                </div>
+
+                <div class="form-group">
+                    <label for="productImage">🖼️ URL de Imagen</label>
+                    <input type="url" id="productImage" placeholder="https://ejemplo.com/imagen.jpg">
+                </div>
+
+                <div class="form-group" style="grid-column: 1 / -1;">
+                    <label for="productDescription">📄 Descripción</label>
+                    <textarea id="productDescription" rows="3" placeholder="Descripción detallada del producto..."></textarea>
+                </div>
+            </form>
+
+            <div style="display: flex; gap: 15px; margin-top: 20px;">
+                <button class="btn btn-success" onclick="addProduct()">
+                    ➕ Agregar Producto
+                </button>
+                <button class="btn btn-primary" onclick="clearForm()">
+                    🗑️ Limpiar Formulario
+                </button>
+            </div>
+        </div>
+
+        <!-- Products Management -->
+        <div class="products-admin">
+            <h2>📦 Productos Actuales</h2>
+            <div id="productsContainer">
+                <div style="text-align: center; padding: 40px; color: #6c757d;">
+                    <p>🔄 Cargando productos...</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Productos iniciales - se cargan desde el index.html
+        let products = [
+            {
+                id: 1,
+                name: "iPhone 15 Pro Max",
+                price: "Q 9,500.00",
+                image: "https://images.unsplash.com/photo-1695048133142-1a20484d2569?w=400&h=400&fit=crop&crop=center",
+                description: "El iPhone más avanzado con cámara profesional de 48MP, chip A17 Pro y diseño en titanio. Batería que dura todo el día."
+            },
+            {
+                id: 2,
+                name: "Samsung Galaxy S24 Ultra",
+                price: "Q 8,200.00", 
+                image: "https://images.unsplash.com/photo-1610945265064-0e34e5519bbf?w=400&h=400&fit=crop&crop=center",
+                description: "Smartphone premium con S Pen incluido, cámara de 200MP con zoom 100x y pantalla Dynamic AMOLED de 6.8 pulgadas."
+            },
+            {
+                id: 3,
+                name: "MacBook Air M3",
+                price: "Q 12,500.00",
+                image: "https://images.unsplash.com/photo-1541807084-5c52b6b3adef?w=400&h=400&fit=crop&crop=center",
+                description: "Laptop ultradelgada con chip M3 de última generación, 16GB de RAM y pantalla Liquid Retina de 15 pulgadas. Perfecta para trabajo y creatividad."
+            },
+            {
+                id: 4,
+                name: "iPad Pro 12.9\"",
+                price: "Q 10,800.00",
+                image: "https://images.unsplash.com/photo-1544244015-0df4b3ffc6b0?w=400&h=400&fit=crop&crop=center",
+                description: "Tablet profesional con chip M4, pantalla Liquid Retina XDR y compatibilidad total con Apple Pencil Pro. Ideal para diseñadores."
+            },
+            {
+                id: 5,
+                name: "AirPods Pro 2",
+                price: "Q 1,850.00",
+                image: "https://images.unsplash.com/photo-1606220945770-b5b6c2c55bf1?w=400&h=400&fit=crop&crop=center",
+                description: "Auriculares inalámbricos con cancelación activa de ruido, sonido espacial personalizado y hasta 30 horas de batería."
+            },
+            {
+                id: 6,
+                name: "Apple Watch Series 9",
+                price: "Q 3,200.00",
+                image: "https://images.unsplash.com/photo-1551816230-ef5deaed4a26?w=400&h=400&fit=crop&crop=center",
+                description: "Smartwatch con GPS, pantalla Always-On Retina, monitoreo avanzado de salud y resistencia al agua hasta 50 metros."
+            }
+        ];
+
+        function showAlert(message, type = 'success') {
+            const alertContainer = document.getElementById('alertContainer');
+            const alertClass = type === 'success' ? 'alert-success' : 'alert-error';
+            
+            alertContainer.innerHTML = `
+                <div class="alert ${alertClass}">
+                    ${type === 'success' ? '✅' : '❌'} ${message}
+                </div>
+            `;
+
+            setTimeout(() => {
+                alertContainer.innerHTML = '';
+            }, 5000);
+        }
+
+        function generateId() {
+            return products.length > 0 ? Math.max(...products.map(p => p.id)) + 1 : 1;
+        }
+
+        function addProduct() {
+            const form = document.getElementById('productForm');
+            const formData = new FormData(form);
+
+            const name = formData.get('productName') || document.getElementById('productName').value;
+            const price = formData.get('productPrice') || document.getElementById('productPrice').value;
+            const image = formData.get('productImage') || document.getElementById('productImage').value;
+            const description = formData.get('productDescription') || document.getElementById('productDescription').value;
+
+            // Validar campos requeridos
+            if (!name || !price) {
+                showAlert('Por favor, completa todos los campos obligatorios (nombre y precio).', 'error');
+                return;
+            }
+
+            // Crear nuevo producto
+            const newProduct = {
+                id: generateId(),
+                name: name.trim(),
+                price: price.trim(),
+                image: image.trim() || null,
+                description: description.trim() || null
+            };
+
+            // Agregar a la lista
+            products.push(newProduct);
+            
+            // Limpiar formulario
+            clearForm();
+            
+            // Actualizar vista
+            renderProducts();
+            
+            // Mostrar mensaje de éxito
+            showAlert(`Producto "${newProduct.name}" agregado exitosamente.`);
+        }
+
+        function deleteProduct(id) {
+            const product = products.find(p => p.id === id);
+            if (!product) return;
+
+            if (confirm(`¿Estás seguro de que quieres eliminar "${product.name}"?`)) {
+                products = products.filter(p => p.id !== id);
+                renderProducts();
+                showAlert(`Producto "${product.name}" eliminado exitosamente.`);
+            }
+        }
+
+        function editProduct(id) {
+            const product = products.find(p => p.id === id);
+            if (!product) return;
+
+            // Llenar formulario con datos del producto
+            document.getElementById('productName').value = product.name;
+            document.getElementById('productPrice').value = product.price;
+            document.getElementById('productImage').value = product.image || '';
+            document.getElementById('productDescription').value = product.description || '';
+
+            // Eliminar producto existente
+            products = products.filter(p => p.id !== id);
+            renderProducts();
+
+            // Scroll al formulario
+            document.querySelector('.admin-section').scrollIntoView({ behavior: 'smooth' });
+            
+            showAlert(`Editando "${product.name}". Modifica los datos y vuelve a agregar.`, 'success');
+        }
+
+        function clearForm() {
+            document.getElementById('productForm').reset();
+        }
+
+        function renderProducts() {
+            const container = document.getElementById('productsContainer');
+            
+            if (products.length === 0) {
+                container.innerHTML = `
+                    <div style="text-align: center; padding: 40px; color: #6c757d;">
+                        <h3>📦 No hay productos en el catálogo</h3>
+                        <p>Agrega tu primer producto usando el formulario de arriba</p>
+                    </div>
+                `;
+                return;
+            }
+
+            container.innerHTML = products.map(product => `
+                <div class="product-item">
+                    <div class="product-thumb">
+                        ${product.image ? 
+                            `<img src="${product.image}" alt="${product.name}" onerror="this.parentElement.innerHTML='📦'">` : 
+                            '📦'
+                        }
+                    </div>
+                    <div class="product-details">
+                        <h3>${product.name}</h3>
+                        <div class="price">${product.price}</div>
+                        ${product.description ? `<div class="description">${product.description.length > 100 ? product.description.substring(0, 100) + '...' : product.description}</div>` : ''}
+                    </div>
+                    <div class="product-actions">
+                        <button class="btn btn-primary" onclick="editProduct(${product.id})" title="Editar producto">
+                            ✏️ Editar
+                        </button>
+                        <button class="btn btn-danger" onclick="deleteProduct(${product.id})" title="Eliminar producto">
+                            🗑️ Eliminar
+                        </button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // Exportar productos para sincronización (opcional)
+        function exportProducts() {
+            const dataStr = JSON.stringify(products, null, 2);
+            const dataBlob = new Blob([dataStr], {type: 'application/json'});
+            const url = URL.createObjectURL(dataBlob);
+            const link = document.createElement('a');
+            link.href = url;
+            link.download = 'productos_catalogo.json';
+            link.click();
+            URL.revokeObjectURL(url);
+            
+            showAlert('Productos exportados exitosamente.');
+        }
+
+        // Event listeners
+        document.getElementById('productForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            addProduct();
+        });
+
+        // Cargar productos al iniciar
+        renderProducts();
+
+        // Agregar botón de exportar
+        document.querySelector('.admin-section').insertAdjacentHTML('beforeend', `
+            <div style="margin-top: 20px; padding-top: 20px; border-top: 2px solid #dee2e6;">
+                <button class="btn btn-primary" onclick="exportProducts()">
+                    💾 Exportar Productos
+                </button>
+                <small style="color: #6c757d; margin-left: 15px;">
+                    Descargar productos como archivo JSON
+                </small>
+            </div>
+        `);
+    </script>
+</body>
+</html>
